@@ -46,7 +46,7 @@ public class CSVParserTest {
 
 		bw.close();
 
-		List<List<String>> actual = CSVParser.parseFile(temp);
+		List<List<String>> actual = CSVParser.parseFile(temp, separator);
 		assertNotNull(actual);
 
 		int actualColCount = actual.size();
