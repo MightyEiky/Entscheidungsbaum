@@ -1,0 +1,22 @@
+FXML Dateien können in Java per FXMLLoader geladen werden (siehe Main.java).
+In FXML muss ein Controller definiert werden (siehe Simple.fxml in AnchorPane: Attribut 'fx:controller')
+
+Im SceneBuilder können den Komponenten im 'code'-Kontextmenü fx:id und andere Eigenschaften zugewisen werden
+zB: onAction und weitere Methoden.
+
+Im Controller müssen die Funktionen die zB in onAction angegeben sind implementiert werden.
+Alternativ können die Elemente aber auch im code erst manipuliert werden.
+Dazu in Controller per 
+
+@FXML
+private Button button;
+
+zB einen Button deklarieren. (dabei muss dann aber auch ein tatsächliches 
+Element im FXML definiert sein, dass die fx:id='button' hat existieren)
+
+in der Methode
+
+@FXML
+void initialize() { }
+
+kann dem Button dann zB ein onAction-Handler zugewiesen werden.
