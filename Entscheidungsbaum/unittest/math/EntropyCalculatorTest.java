@@ -28,7 +28,7 @@ public class EntropyCalculatorTest {
 		double testValue1 = 6d / 11d;
 		double testValue2 = 5d / 11d;
 
-		double expected = (-1 * testValue1) * Math.log10(testValue1) + (-1 * testValue2) * Math.log10(testValue2);
+		double expected = (-1 * testValue1) * Math.log(testValue1) + (-1 * testValue2) * Math.log(testValue2);
 
 		Set<Double> params = new HashSet<Double>();
 		params.add(testValue1);

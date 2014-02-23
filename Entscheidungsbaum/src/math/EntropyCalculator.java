@@ -25,7 +25,7 @@ public class EntropyCalculator {
 		}
 
 		for (Double d : pProbabilities) {
-			result += (-1 * d) * Math.log10(d);
+			result += (-1 * d) * Math.log(d);
 		}
 
 		return result;
