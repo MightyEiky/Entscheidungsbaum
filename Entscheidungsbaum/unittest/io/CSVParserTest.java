@@ -26,20 +26,27 @@ public class CSVParserTest {
 	 */
 	@Test
 	public void parseFileTest() throws IOException {
-		List<List<String>> expected = Arrays.asList(Arrays.asList("Geschlecht", "m", "w", "w", "m", "w"),
-				Arrays.asList("Raucherstatus", "y", "n", "y", "y", "n"));
+		//@formatter:off
+		List<List<String>> expected = Arrays.asList(
+				Arrays.asList("Geschlecht", "Raucherstatus"),
+				Arrays.asList("m", "n"),
+				Arrays.asList("w", "y"));
+		//@formatter:on
 
 		String separator = ";";
 		String lineSeparator = System.getProperty("line.separator");
 		File temp = File.createTempFile("tempfile", ".tmp");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
 
-		int expectedColCount = expected.size();
-		int expectedRowCount = expected.get(0).size();
+		int expectedColCount = expected.get(0).size();
+		int expectedRowCount = expected.size();
 
-		for (int i = 0; i < expectedRowCount; i++) {
-			for (int j = 0; j < expectedColCount; j++) {
-				bw.write(expected.get(j).get(i) + separator);
+		for (List<String> row : expected) {
+			for (int i = 0; i < row.size(); i++) {
+				if (i != 0) {
+					bw.write(separator);
+				}
+				bw.write(row.get(i));
 			}
 			bw.write(lineSeparator);
 		}
@@ -49,16 +56,14 @@ public class CSVParserTest {
 		List<List<String>> actual = CSVParser.parseFile(temp, separator);
 		assertNotNull(actual);
 
-		int actualColCount = actual.size();
-		int actialRowCount = actual.get(0).size();
+		int actualColCount = actual.get(0).size();
+		int actialRowCount = actual.size();
 
 		assertEquals(expectedColCount, actualColCount);
 		assertEquals(expectedRowCount, actialRowCount);
 
-		for (int col = 0; col < expectedColCount; col++) {
-			for (int row = 0; row < expectedRowCount; row++) {
-				assertEquals(expected.get(col).get(row), actual.get(col).get(row));
-			}
+		for (int i = 0; i < actual.size(); i++) {
+			assertEquals(expected.get(i), actual.get(i));
 		}
 	}
 }

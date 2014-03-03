@@ -1,27 +1,30 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import java.util.Arrays;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import factory.TableViewFactory;
 
 public class ApplicationController {
-	
+
 	@FXML
-	private Button button2;
-	
+	private TableView<List<String>> tableview;
+
 	@FXML
 	void initialize() {
-		button2.setOnAction(new EventHandler<ActionEvent>() {
+		//@formatter:off
+		ObservableList<List<String>> rows = FXCollections.observableArrayList(Arrays.asList(
+					Arrays.asList("Reihe1 Spalte1", "Reihe1 Spalte2", "Reihe1 Spalte3"),
+					Arrays.asList("Reihe2 Spalte1", "Reihe2 Spalte2", "Reihe3 Spalte2")
+				));
+		//@formatter:on
 
-			@Override
-			public void handle(ActionEvent arg0) {
-				System.out.println("Hello World2");
-			}
-		});
-	}
-	
-	public void clickMe() {
-		System.out.println("Hello World");
+		TableView<List<String>> result = TableViewFactory.createTableView(rows);
+		tableview.getColumns().addAll(result.getColumns());
+		tableview.setItems(result.getItems());
 	}
 }
