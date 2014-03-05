@@ -5,10 +5,15 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
+
+import component.EditableTableCell;
 
 /**
  * 
@@ -35,6 +40,19 @@ public final class TableViewFactory {
 			currentCol.setCellValueFactory(new Callback<CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
 				public ObservableValue<String> call(CellDataFeatures<List<String>, String> arg) {
 					return new MyObservableValue(arg.getValue().get(index));
+				}
+			});
+			currentCol.setCellFactory(new Callback<TableColumn<List<String>, String>, TableCell<List<String>, String>>() {
+				@Override
+				public TableCell<List<String>, String> call(TableColumn<List<String>, String> arg0) {
+					return new EditableTableCell();
+				}
+			});
+			currentCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<List<String>, String>>() {
+				@Override
+				public void handle(CellEditEvent<List<String>, String> arg0) {
+					((List<String>) arg0.getTableView().getItems().get(arg0.getTablePosition().getRow())).set(arg0.getTablePosition()
+							.getColumn(), arg0.getNewValue());
 				}
 			});
 			tableView.getColumns().add(currentCol);

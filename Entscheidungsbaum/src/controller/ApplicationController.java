@@ -44,6 +44,7 @@ public class ApplicationController {
 	 * Initialize TableView.
 	 */
 	private void initializeTableView() {
+		getTableView().setEditable(true);
 		getTableView().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		getTableView().getSelectionModel().selectedItemProperty().addListener(new SelectionChangeListener());
 	}
