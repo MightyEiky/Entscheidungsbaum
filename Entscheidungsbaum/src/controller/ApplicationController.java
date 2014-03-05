@@ -15,8 +15,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import listener.SelectionChangeListener;
 
 public class ApplicationController {
 	@FXML
@@ -35,6 +37,15 @@ public class ApplicationController {
 	@FXML
 	void initialize() throws FileNotFoundException, IOException {
 		initializeMenu();
+		initializeTableView();
+	}
+
+	/**
+	 * Initialize TableView.
+	 */
+	private void initializeTableView() {
+		getTableView().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		getTableView().getSelectionModel().selectedItemProperty().addListener(new SelectionChangeListener());
 	}
 
 	/**
