@@ -4,16 +4,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplicationController">
 <children><MenuBar xmlns:fx="http://javafx.com/fxml">
   <menus>
-    <Menu mnemonicParsing="false" text="Datei">
-      <items><MenuItem mnemonicParsing="false" text="Öffnen" /><SeparatorMenuItem mnemonicParsing="false" /><MenuItem mnemonicParsing="false" text="Speichern" /><MenuItem mnemonicParsing="false" text="Speichern als" /><SeparatorMenuItem mnemonicParsing="false" />
-        <MenuItem mnemonicParsing="false" text="Schließen" />
+    <Menu fx:id="menuFile" mnemonicParsing="false" text="Datei">
+      <items><MenuItem fx:id="open" mnemonicParsing="false" text="Öffnen" /><SeparatorMenuItem mnemonicParsing="false" /><MenuItem mnemonicParsing="false" fx:id="save" text="Speichern" /><MenuItem mnemonicParsing="false" fx:id="saveAs" text="Speichern als" /><SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" fx:id="quit" text="Schließen" />
       </items>
     </Menu>
-    <Menu mnemonicParsing="false" text="Bearbeiten" />
-    <Menu mnemonicParsing="false" text="Hilfe">
+    <Menu fx:id="menuEdit" mnemonicParsing="false" text="Bearbeiten" />
+    <Menu fx:id="menuHelp" mnemonicParsing="false" text="Hilfe">
       <items>
         <MenuItem mnemonicParsing="false" text="Über" />
       </items>
@@ -21,22 +21,17 @@
   </menus>
 </MenuBar><TabPane prefHeight="453.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml">
   <tabs>
-    <Tab text="Tabellenansicht">
+    <Tab fx:id="tabTable" text="Tabellenansicht">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 <children><ScrollPane layoutX="1.0" prefHeight="426.0" prefWidth="768.0" xmlns:fx="http://javafx.com/fxml">
-<content><TableView prefHeight="419.0" prefWidth="765.0" xmlns:fx="http://javafx.com/fxml">
-  <columns>
-    <TableColumn prefWidth="75.0" text="Spalte1" />
-    <TableColumn prefWidth="75.0" text="Spalte2" />
-  </columns>
-</TableView>
+<content><TableView fx:id="tableView" prefHeight="419.0" prefWidth="765.0" xmlns:fx="http://javafx.com/fxml" />
 </content>
 </ScrollPane>
 </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Baumansicht">
+    <Tab fx:id="tabTree" text="Baumansicht">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>

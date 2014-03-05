@@ -33,6 +33,7 @@ public final class TableViewFactory {
 			tableView.getColumns().add(currentCol);
 		}
 
+		observableDataRows.remove(0);
 		tableView.setItems(observableDataRows);
 		return tableView;
 	}
