@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplicationController">
+<VBox fx:id="container" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplicationController">
 <children><MenuBar xmlns:fx="http://javafx.com/fxml">
   <menus>
     <Menu fx:id="menuFile" mnemonicParsing="false" text="Datei">
@@ -24,10 +24,7 @@
     <Tab fx:id="tabTable" text="Tabellenansicht">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><ScrollPane layoutX="1.0" prefHeight="426.0" prefWidth="768.0" xmlns:fx="http://javafx.com/fxml">
-<content><TableView fx:id="tableView" prefHeight="419.0" prefWidth="765.0" xmlns:fx="http://javafx.com/fxml" />
-</content>
-</ScrollPane>
+<children><TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="419.0" prefWidth="765.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 </children></AnchorPane>
       </content>
     </Tab>
@@ -37,7 +34,7 @@
       </content>
     </Tab>
   </tabs>
-</TabPane><Separator prefWidth="200.0" /><HBox prefHeight="36.0" prefWidth="768.0">
+</TabPane><Separator prefWidth="200.0" /><HBox fillHeight="false" maxHeight="40.0" maxWidth="700.0" minHeight="25.0" minWidth="500.0" prefHeight="40.0" prefWidth="700.0">
 <children><Pane prefHeight="33.0" prefWidth="760.0">
 <children><Label fx:id="status" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="6.0" opacity="0.54" prefHeight="17.0" prefWidth="760.0" text="Status" />
 </children></Pane>
