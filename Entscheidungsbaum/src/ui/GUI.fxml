@@ -19,7 +19,7 @@
       </items>
     </Menu>
   </menus>
-</MenuBar><TabPane prefHeight="453.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml">
+</MenuBar><TabPane prefHeight="453.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" xmlns:fx="http://javafx.com/fxml">
   <tabs>
     <Tab fx:id="tabTable" text="Tabellenansicht">
       <content>
