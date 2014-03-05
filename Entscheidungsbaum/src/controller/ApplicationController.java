@@ -4,9 +4,7 @@ import factory.TableViewFactory;
 import handler.OpenHandler;
 import handler.QuitHandler;
 import handler.SaveHandler;
-import io.CSVParser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -15,8 +13,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 public class ApplicationController {
 	@FXML
@@ -29,18 +29,19 @@ public class ApplicationController {
 	private MenuItem saveAs;
 	@FXML
 	private MenuItem save;
+	@FXML
+	private Label status;
 
 	@FXML
 	void initialize() throws FileNotFoundException, IOException {
 		initializeMenu();
-		populateTableView(CSVParser.parseFile(new File("Beispiel.csv"), ","));
 	}
 
 	/**
 	 * Adds EventHandlers to all MenuItems.
 	 */
 	private void initializeMenu() {
-		getOpenItem().setOnAction(new OpenHandler());
+		getOpenItem().setOnAction(new OpenHandler(this));
 		getSaveItem().setOnAction(new SaveHandler());
 		getQuitItem().setOnAction(new QuitHandler(this));
 	}
@@ -59,10 +60,38 @@ public class ApplicationController {
 	}
 
 	/**
+	 * Allows to put message in the status line of the application.
+	 * 
+	 * @pString status message
+	 */
+	public void setStatus(String pString) {
+		getStatusLabel().setText(pString);
+	}
+
+	/**
+	 * Sets the title of the application window.
+	 * 
+	 * @param pString
+	 *            title
+	 */
+	public void setTitle(String pString) {
+		((Stage) getStatusLabel().getScene().getWindow()).setTitle(pString);
+	}
+
+	/**
 	 * Closes the application.
 	 */
 	public void quit() {
 		Platform.exit();
+	}
+
+	/**
+	 * Returns the status Label instance.
+	 * 
+	 * @return Label instance
+	 */
+	public Label getStatusLabel() {
+		return status;
 	}
 
 	/**

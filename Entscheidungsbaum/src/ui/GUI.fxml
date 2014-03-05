@@ -4,12 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplicationController">
+<VBox fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplicationController">
 <children><MenuBar xmlns:fx="http://javafx.com/fxml">
   <menus>
     <Menu fx:id="menuFile" mnemonicParsing="false" text="Datei">
-      <items><MenuItem fx:id="open" mnemonicParsing="false" text="Öffnen" /><SeparatorMenuItem mnemonicParsing="false" /><MenuItem mnemonicParsing="false" fx:id="save" text="Speichern" /><MenuItem mnemonicParsing="false" fx:id="saveAs" text="Speichern als" /><SeparatorMenuItem mnemonicParsing="false" />
-        <MenuItem mnemonicParsing="false" fx:id="quit" text="Schließen" />
+      <items><MenuItem fx:id="open" mnemonicParsing="false" text="CSV öffnen" /><SeparatorMenuItem mnemonicParsing="false" /><MenuItem fx:id="save" mnemonicParsing="false" text="Speichern" /><MenuItem fx:id="saveAs" mnemonicParsing="false" text="Speichern als" /><SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem fx:id="quit" mnemonicParsing="false" text="Schließen" />
       </items>
     </Menu>
     <Menu fx:id="menuEdit" mnemonicParsing="false" text="Bearbeiten" />
@@ -38,8 +38,8 @@
     </Tab>
   </tabs>
 </TabPane><Separator prefWidth="200.0" /><HBox prefHeight="36.0" prefWidth="768.0">
-<children><Pane prefHeight="200.0" prefWidth="200.0">
-<children><Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="5.0" layoutY="1.0" opacity="0.54" prefHeight="17.0" prefWidth="73.0" text="Status" />
+<children><Pane prefHeight="33.0" prefWidth="760.0">
+<children><Label fx:id="status" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="6.0" opacity="0.54" prefHeight="17.0" prefWidth="760.0" text="Status" />
 </children></Pane>
 </children></HBox>
 </children></VBox>

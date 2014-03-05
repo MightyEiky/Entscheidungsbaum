@@ -10,12 +10,19 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @author Julius
+ * 
+ */
 public final class TableViewFactory {
 
 	/**
+	 * Creates a TableView from given data.
 	 * 
 	 * @param pDataRows
-	 * @return
+	 *            data as List of rows
+	 * @return TableView instance
 	 */
 	public static TableView<List<String>> createTableView(List<List<String>> pDataRows) {
 		List<String> colNames = pDataRows.get(0);
