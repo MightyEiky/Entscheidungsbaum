@@ -22,4 +22,13 @@ public class FileChooserFactory {
 		fc.getExtensionFilters().add(new ExtensionFilter("CSV-Dateien (*.csv)", "*.csv"));
 		return fc;
 	}
+
+	/**
+	 * Not implemented yet!
+	 * 
+	 * @return
+	 */
+	public static FileChooser createSaveDialog(String pTitle) {
+		return null;
+	}
 }

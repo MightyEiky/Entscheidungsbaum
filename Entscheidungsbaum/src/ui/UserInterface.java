@@ -8,7 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import controller.ApplicationController;
 
@@ -25,7 +25,7 @@ public class UserInterface extends Application {
 		URL location = UserInterface.class.getResource("GUI.fxml");
 		fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
 		fxmlLoader.setLocation(location);
-		VBox pane = (VBox) fxmlLoader.load(location.openStream());
+		AnchorPane pane = (AnchorPane) fxmlLoader.load(location.openStream());
 
 		Scene scene = new Scene(pane);
 		pStage.setScene(scene);

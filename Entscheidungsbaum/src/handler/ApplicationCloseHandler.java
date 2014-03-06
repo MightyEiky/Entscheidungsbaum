@@ -14,7 +14,7 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
 	/**
 	 * Application controller instance of this application.
 	 */
-	ApplicationController controller;
+	private ApplicationController controller;
 
 	/**
 	 * Constructor.
@@ -29,8 +29,10 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
 	@Override
 	public void handle(WindowEvent arg0) {
 		if (!controller.getSavedStatus()) {
-			System.out.println("Ungespeicherte Änderungen verloren gegangen");
-			controller.quit();
+			controller.getMainWindow().setDisable(true);
+			controller.getMainWindow().setOpacity(0.5);
+			controller.getDialog().setVisible(true);
+			arg0.consume();
 		} else {
 			controller.quit();
 		}

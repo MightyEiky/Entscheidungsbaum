@@ -1,42 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="container" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplicationController">
-<children><MenuBar xmlns:fx="http://javafx.com/fxml">
-  <menus>
-    <Menu fx:id="menuFile" mnemonicParsing="false" text="Datei">
-      <items><MenuItem fx:id="open" mnemonicParsing="false" text="CSV öffnen" /><SeparatorMenuItem mnemonicParsing="false" /><MenuItem fx:id="save" mnemonicParsing="false" text="Speichern" /><MenuItem fx:id="saveAs" mnemonicParsing="false" text="Speichern als" /><SeparatorMenuItem mnemonicParsing="false" />
-        <MenuItem fx:id="quit" mnemonicParsing="false" text="Schließen" />
-      </items>
-    </Menu>
-    <Menu fx:id="menuEdit" mnemonicParsing="false" text="Bearbeiten" />
-    <Menu fx:id="menuHelp" mnemonicParsing="false" text="Hilfe">
-      <items>
-        <MenuItem mnemonicParsing="false" text="Über" />
-      </items>
-    </Menu>
-  </menus>
-</MenuBar><TabPane prefHeight="453.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" xmlns:fx="http://javafx.com/fxml">
-  <tabs>
-    <Tab fx:id="tabTable" text="Tabellenansicht">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><TableView fx:id="tableView" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="419.0" prefWidth="765.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-</children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab fx:id="tabTree" text="Baumansicht">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-  </tabs>
-</TabPane><Separator prefWidth="200.0" /><HBox fillHeight="false" maxHeight="40.0" maxWidth="700.0" minHeight="25.0" minWidth="500.0" prefHeight="40.0" prefWidth="700.0">
-<children><Pane prefHeight="33.0" prefWidth="760.0">
-<children><Label fx:id="status" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="6.0" opacity="0.54" prefHeight="17.0" prefWidth="760.0" text="Status" />
-</children></Pane>
-</children></HBox>
-</children></VBox>
+<AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+	prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ApplicationController">
+	<children>
+		<AnchorPane fx:id="mainWindow" prefHeight="200.0"
+			prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
+			<children>
+				<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+					minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0"
+					prefWidth="768.0" AnchorPane.bottomAnchor="0.0"
+					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+					AnchorPane.topAnchor="0.0">
+					<children>
+						<MenuBar>
+							<menus>
+								<Menu mnemonicParsing="false" text="Datei">
+									<items>
+										<MenuItem fx:id="open" mnemonicParsing="false" text="CSV öffnen" />
+										<SeparatorMenuItem mnemonicParsing="false" />
+										<MenuItem fx:id="save" mnemonicParsing="false" text="Speichern" />
+										<MenuItem fx:id="saveAs" mnemonicParsing="false"
+											text="Speichern als" />
+										<SeparatorMenuItem mnemonicParsing="false" />
+										<MenuItem fx:id="quit" mnemonicParsing="false" text="Schließen" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Bearbeiten" />
+								<Menu mnemonicParsing="false" text="Hilfe">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Über" />
+									</items>
+								</Menu>
+							</menus>
+						</MenuBar>
+						<TabPane prefHeight="453.0" prefWidth="600.0"
+							tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+							<tabs>
+								<Tab text="Tabellenansicht">
+									<content>
+										<AnchorPane minHeight="0.0" minWidth="0.0"
+											prefHeight="180.0" prefWidth="200.0">
+											<children>
+												<TableView fx:id="tableView" editable="true"
+													maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+													prefHeight="419.0" prefWidth="765.0"
+													AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+													AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+											</children>
+										</AnchorPane>
+									</content>
+								</Tab>
+								<Tab text="Baumansicht">
+									<content>
+										<AnchorPane minHeight="0.0" minWidth="0.0"
+											prefHeight="180.0" prefWidth="200.0" />
+									</content>
+								</Tab>
+							</tabs>
+						</TabPane>
+						<Separator prefWidth="200.0" />
+						<HBox fillHeight="false" maxHeight="40.0" maxWidth="700.0"
+							minHeight="25.0" minWidth="500.0" prefHeight="40.0" prefWidth="700.0"
+							VBox.vgrow="NEVER">
+							<children>
+								<Pane prefHeight="33.0" prefWidth="760.0">
+									<children>
+										<Label fx:id="status" alignment="TOP_LEFT"
+											contentDisplay="TOP" layoutX="14.0" layoutY="6.0" opacity="0.54"
+											prefHeight="17.0" prefWidth="760.0" text="Status" />
+									</children>
+								</Pane>
+							</children>
+						</HBox>
+					</children>
+				</VBox>
+			</children>
+		</AnchorPane>
+		<AnchorPane fx:id="dialog" prefHeight="200.0" prefWidth="200.0"
+			visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<BorderPane prefHeight="200.0" prefWidth="200.0"
+					AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<center>
+						<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+							minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0"
+							prefWidth="345.0"
+							style="-fx-background-color: #cecece; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 1; -fx-border-color: #aaaaaa;"
+							BorderPane.alignment="CENTER">
+							<children>
+								<Label layoutX="20.0" layoutY="15.0" prefWidth="313.0"
+									text="Sie haben ungespeicherte Änderungen an der CSV-Datei." />
+								<Label layoutX="20.0" layoutY="32.0" text="Wie möchten sie verfahren?" />
+								<Button fx:id="dlgSave" layoutX="40.0" layoutY="75.0"
+									mnemonicParsing="false" text="Speichern" />
+								<Button fx:id="dlgClose" layoutX="134.0" layoutY="75.0"
+									mnemonicParsing="false" text="Verwerfen" />
+								<Button fx:id="dlgCancel" layoutX="229.0" layoutY="75.0"
+									mnemonicParsing="false" text="Abbrechen" />
+							</children>
+							<BorderPane.margin>
+								<Insets />
+							</BorderPane.margin>
+						</AnchorPane>
+					</center>
+					<top>
+						<Pane prefHeight="90.0" prefWidth="10.0"
+							BorderPane.alignment="CENTER" />
+					</top>
+					<bottom>
+						<Pane prefHeight="90.0" prefWidth="10.0"
+							BorderPane.alignment="CENTER" />
+					</bottom>
+					<left>
+						<Pane prefHeight="10.0" prefWidth="80.0"
+							BorderPane.alignment="CENTER" />
+					</left>
+					<right>
+						<Pane prefHeight="10.0" prefWidth="80.0"
+							BorderPane.alignment="CENTER" />
+					</right>
+				</BorderPane>
+			</children>
+		</AnchorPane>
+	</children>
+</AnchorPane>
