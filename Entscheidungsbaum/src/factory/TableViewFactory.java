@@ -15,6 +15,8 @@ import javafx.util.Callback;
 
 import component.EditableTableCell;
 
+import controller.ApplicationController;
+
 /**
  * 
  * @author Julius
@@ -29,7 +31,7 @@ public final class TableViewFactory {
 	 *            data as List of rows
 	 * @return TableView instance
 	 */
-	public static TableView<List<String>> createTableView(List<List<String>> pDataRows) {
+	public static TableView<List<String>> createTableView(List<List<String>> pDataRows, final ApplicationController pController) {
 		List<String> colNames = pDataRows.get(0);
 		ObservableList<List<String>> observableDataRows = FXCollections.observableArrayList(pDataRows);
 		TableView<List<String>> tableView = new TableView<List<String>>();
@@ -45,7 +47,7 @@ public final class TableViewFactory {
 			currentCol.setCellFactory(new Callback<TableColumn<List<String>, String>, TableCell<List<String>, String>>() {
 				@Override
 				public TableCell<List<String>, String> call(TableColumn<List<String>, String> arg0) {
-					return new EditableTableCell();
+					return new EditableTableCell(pController);
 				}
 			});
 			currentCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<List<String>, String>>() {
@@ -55,6 +57,7 @@ public final class TableViewFactory {
 							.getColumn(), arg0.getNewValue());
 				}
 			});
+			currentCol.setMinWidth(150);
 			tableView.getColumns().add(currentCol);
 		}
 

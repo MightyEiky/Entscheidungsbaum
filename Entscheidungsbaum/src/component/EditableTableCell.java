@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import controller.ApplicationController;
 
 /**
  * 
@@ -20,7 +21,21 @@ import javafx.scene.input.KeyEvent;
  * 
  */
 public class EditableTableCell extends TableCell<List<String>, String> {
+
+	/** Textfield used for editing of cells */
 	private TextField textField;
+
+	/** Application controller instance of the application */
+	private ApplicationController controller;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param pController
+	 */
+	public EditableTableCell(ApplicationController pController) {
+		controller = pController;
+	}
 
 	@Override
 	public void startEdit() {
@@ -74,10 +89,12 @@ public class EditableTableCell extends TableCell<List<String>, String> {
 			public void handle(KeyEvent t) {
 				if (t.getCode() == KeyCode.ENTER) {
 					commitEdit(textField.getText());
+					controller.setSavedStatus(false);
 				} else if (t.getCode() == KeyCode.ESCAPE) {
 					cancelEdit();
 				} else if (t.getCode() == KeyCode.TAB) {
 					commitEdit(textField.getText());
+					controller.setSavedStatus(false);
 					TableColumn<List<String>, ?> nextColumn = getNextColumn(!t.isShiftDown());
 					if (nextColumn != null) {
 						getTableView().edit(getTableRow().getIndex(), nextColumn);
@@ -90,6 +107,7 @@ public class EditableTableCell extends TableCell<List<String>, String> {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if (!newValue && textField != null) {
 					commitEdit(textField.getText());
+					controller.setSavedStatus(false);
 				}
 			}
 		});

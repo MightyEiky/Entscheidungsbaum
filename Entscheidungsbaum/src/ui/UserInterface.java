@@ -1,10 +1,16 @@
 package ui;
 
+import handler.ApplicationCloseHandler;
+
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import controller.ApplicationController;
 
 /**
  * UserInterface of Entscheidungsbaum.
@@ -15,10 +21,16 @@ import javafx.stage.Stage;
 public class UserInterface extends Application {
 	@Override
 	public void start(Stage pStage) throws Exception {
-		VBox pane = (VBox) FXMLLoader.load(UserInterface.class.getResource("GUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		URL location = UserInterface.class.getResource("GUI.fxml");
+		fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+		fxmlLoader.setLocation(location);
+		VBox pane = (VBox) fxmlLoader.load(location.openStream());
+
 		Scene scene = new Scene(pane);
 		pStage.setScene(scene);
 		pStage.setTitle("Entscheidungsbaum");
 		pStage.show();
+		pStage.setOnCloseRequest(new ApplicationCloseHandler((ApplicationController) fxmlLoader.getController()));
 	}
 }

@@ -5,6 +5,7 @@ import handler.OpenHandler;
 import handler.QuitHandler;
 import handler.SaveHandler;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +22,10 @@ import javafx.stage.Stage;
 import listener.SelectionChangeListener;
 
 public class ApplicationController {
+
+	/** CSV value separator */
+	private static final String CSV_SEPARATOR = ",";
+
 	@FXML
 	private TableView<List<String>> tableView;
 	@FXML
@@ -34,10 +39,33 @@ public class ApplicationController {
 	@FXML
 	private Label status;
 
+	/** Current csv file displayed in the TableView */
+	private File currentFile;
+
+	/** Indicating whether or not there are unsaved changes in current csv file */
+	private boolean saved;
+
 	@FXML
 	void initialize() throws FileNotFoundException, IOException {
 		initializeMenu();
 		initializeTableView();
+		initializeMembers();
+		initializeApplication();
+	}
+
+	/**
+	 * Initializes the application
+	 * */
+	private void initializeApplication() {
+
+	}
+
+	/**
+	 * Initializes attributes of this class.
+	 */
+	private void initializeMembers() {
+		saved = true;
+		currentFile = null;
 	}
 
 	/**
@@ -54,7 +82,7 @@ public class ApplicationController {
 	 */
 	private void initializeMenu() {
 		getOpenItem().setOnAction(new OpenHandler(this));
-		getSaveItem().setOnAction(new SaveHandler());
+		getSaveItem().setOnAction(new SaveHandler(this));
 		getQuitItem().setOnAction(new QuitHandler(this));
 	}
 
@@ -66,7 +94,7 @@ public class ApplicationController {
 	 */
 	public void populateTableView(List<List<String>> pData) {
 		ObservableList<List<String>> rows = FXCollections.observableArrayList(pData);
-		TableView<List<String>> result = TableViewFactory.createTableView(rows);
+		TableView<List<String>> result = TableViewFactory.createTableView(rows, this);
 		getTableView().getColumns().addAll(result.getColumns());
 		getTableView().setItems(result.getItems());
 	}
@@ -81,13 +109,31 @@ public class ApplicationController {
 	}
 
 	/**
+	 * Returns the Stage of this application.
+	 * 
+	 * @return Stage
+	 */
+	public Stage getStage() {
+		return (Stage) getStatusLabel().getScene().getWindow();
+	}
+
+	/**
+	 * Returns the title of the application window.
+	 * 
+	 * @return String
+	 */
+	public String getTitle() {
+		return getStage().getTitle();
+	}
+
+	/**
 	 * Sets the title of the application window.
 	 * 
 	 * @param pString
 	 *            title
 	 */
 	public void setTitle(String pString) {
-		((Stage) getStatusLabel().getScene().getWindow()).setTitle(pString);
+		getStage().setTitle(pString);
 	}
 
 	/**
@@ -95,6 +141,59 @@ public class ApplicationController {
 	 */
 	public void quit() {
 		Platform.exit();
+	}
+
+	/**
+	 * Returns the value separator used in the CSV files.
+	 * 
+	 * @return String
+	 */
+	public String getCSVSeparator() {
+		return CSV_SEPARATOR;
+	}
+
+	/**
+	 * Allows to access the currently opened File.
+	 * 
+	 * @return currently opened File instance
+	 */
+	public File getCurrentFile() {
+		return currentFile;
+	}
+
+	/**
+	 * Allows to set the currently openend file.
+	 * 
+	 * @pFile the file
+	 */
+	public void setCurrentFile(File pFile) {
+		currentFile = pFile;
+	}
+
+	/**
+	 * Allows to set the indicator for unsaved changes.
+	 * 
+	 * @param pB
+	 *            true meaning there are <b>no</b> unsaved changes, false
+	 *            meaning there <b>are</b> unsaved changes
+	 */
+	public void setSavedStatus(boolean pB) {
+		saved = pB;
+		if (pB) {
+			setTitle(getCurrentFile().getAbsolutePath());
+		} else {
+			setTitle(getCurrentFile().getAbsolutePath() + "*");
+		}
+	}
+
+	/**
+	 * Indicates whether or not there are unsaved changes in the current csv
+	 * file.
+	 * 
+	 * @return true if no unsaved changes, false otherwise
+	 */
+	public boolean getSavedStatus() {
+		return saved;
 	}
 
 	/**

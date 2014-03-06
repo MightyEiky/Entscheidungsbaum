@@ -41,6 +41,8 @@ public class OpenHandler implements EventHandler<ActionEvent> {
 				controller.populateTableView(CSVParser.parseFile(csvFile, ","));
 				controller.setStatus(csvFile.getAbsolutePath() + " geöffnet");
 				controller.setTitle(csvFile.getAbsolutePath());
+				controller.setCurrentFile(csvFile);
+				controller.setSavedStatus(true);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
