@@ -6,8 +6,6 @@ import handler.QuitHandler;
 import handler.SaveHandler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -46,7 +44,7 @@ public class ApplicationController {
 	private boolean saved;
 
 	@FXML
-	void initialize() throws FileNotFoundException, IOException {
+	void initialize() {
 		initializeMenu();
 		initializeTableView();
 		initializeMembers();
