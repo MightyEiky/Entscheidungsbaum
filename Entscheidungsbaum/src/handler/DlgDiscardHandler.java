@@ -9,7 +9,7 @@ import controller.ApplicationController;
  * @author Julius
  * 
  */
-public class DlgCloseHandler implements EventHandler<MouseEvent> {
+public class DlgDiscardHandler implements EventHandler<MouseEvent> {
 
 	/** ApplicationController instance of application */
 	private ApplicationController controller;
@@ -20,12 +20,13 @@ public class DlgCloseHandler implements EventHandler<MouseEvent> {
 	 * @param pController
 	 *            ApplicationController instance of application
 	 */
-	public DlgCloseHandler(ApplicationController pController) {
+	public DlgDiscardHandler(ApplicationController pController) {
 		controller = pController;
 	}
 
 	@Override
-	public void handle(MouseEvent arg0) {
-		controller.quit();
+	public void handle(MouseEvent pEvent) {
+		controller.responseDiscard();
+		pEvent.consume();
 	}
 }

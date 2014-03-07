@@ -27,12 +27,10 @@ public class ApplicationCloseHandler implements EventHandler<WindowEvent> {
 	}
 
 	@Override
-	public void handle(WindowEvent arg0) {
+	public void handle(WindowEvent pEvent) {
 		if (!controller.getSavedStatus()) {
-			controller.getMainWindow().setDisable(true);
-			controller.getMainWindow().setOpacity(0.5);
-			controller.getDialog().setVisible(true);
-			arg0.consume();
+			controller.showUnsavedChangesDialog(ApplicationController.CONTEXT_CLOSE_APPLICATION);
+			pEvent.consume();
 		} else {
 			controller.quit();
 		}

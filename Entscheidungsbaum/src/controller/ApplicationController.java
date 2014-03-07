@@ -1,14 +1,19 @@
 package controller;
 
+import factory.FileChooserFactory;
 import factory.TableViewFactory;
 import handler.DlgCancelHandler;
-import handler.DlgCloseHandler;
+import handler.DlgDiscardHandler;
 import handler.DlgSaveHandler;
 import handler.OpenHandler;
 import handler.QuitHandler;
 import handler.SaveHandler;
+import io.CSVParser;
+import io.Writer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -23,10 +28,23 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listener.SelectionChangeListener;
+import util.ListConversionHelper;
 
+/**
+ * 
+ * @author Julius
+ * 
+ */
 public class ApplicationController {
+
+	/** Used when user intends to close application */
+	public static final int CONTEXT_CLOSE_APPLICATION = 1;
+
+	/** Used when user intends to open a file */
+	public static final int CONTEXT_OPEN_FILE = 2;
 
 	/** CSV value separator */
 	private static final String CSV_SEPARATOR = ",";
@@ -60,6 +78,9 @@ public class ApplicationController {
 	/** Indicating whether or not there are unsaved changes in current csv file */
 	private boolean saved;
 
+	/** Conetext of unsaved changes dialog */
+	private int dlgContext;
+
 	@FXML
 	void initialize() {
 		dlgClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -77,7 +98,7 @@ public class ApplicationController {
 
 	private void initializeDialog() {
 		dlgCancel.setOnMouseClicked(new DlgCancelHandler(this));
-		dlgClose.setOnMouseClicked(new DlgCloseHandler(this));
+		dlgClose.setOnMouseClicked(new DlgDiscardHandler(this));
 		dlgSave.setOnMouseClicked(new DlgSaveHandler(this));
 	}
 
@@ -108,6 +129,111 @@ public class ApplicationController {
 	}
 
 	/**
+	 * Closes the unsaved changes dialog.
+	 */
+	public void hideUnsavedChangesDialog() {
+		getMainWindow().setDisable(false);
+		getMainWindow().setOpacity(1);
+		getDialog().setVisible(false);
+	}
+
+	/**
+	 * Opens a dialog to ask the user to save, discard his changes or cancel.
+	 * 
+	 * @pContext the context of the dialog
+	 * @return true, if the action was not cancelled by the user, false if so
+	 */
+	public void showUnsavedChangesDialog(int pContext) {
+		dlgContext = pContext;
+		getMainWindow().setDisable(true);
+		getMainWindow().setOpacity(0.5);
+		getDialog().setVisible(true);
+	}
+
+	/**
+	 * Defines the behavior of the application after a discard response from the
+	 * dialog.
+	 */
+	public void responseDiscard() {
+		hideUnsavedChangesDialog();
+		if (dlgContext == CONTEXT_OPEN_FILE) {
+			openFile();
+		} else if (dlgContext == CONTEXT_CLOSE_APPLICATION) {
+			quit();
+		}
+	}
+
+	/**
+	 * Defines the behavior of the application after a cancel response from the
+	 * dialog.
+	 */
+	public void responseCancel() {
+		hideUnsavedChangesDialog();
+	}
+
+	/**
+	 * Defines the behavior of the application after a save response from the
+	 * dialog.
+	 */
+	public void responseSave() {
+		hideUnsavedChangesDialog();
+		if (dlgContext == CONTEXT_OPEN_FILE) {
+			saveCurrentFile();
+			openFile();
+		} else if (dlgContext == CONTEXT_CLOSE_APPLICATION) {
+			saveCurrentFile();
+			quit();
+		}
+	}
+
+	/**
+	 * Saves data from the TableView to the currently opened file.
+	 */
+	public void saveCurrentFile() {
+		TableView<List<String>> tableView = getTableView();
+		if (tableView != null) {
+			ObservableList<List<String>> items = tableView.getItems();
+			if (items != null) {
+				File currentFile = getCurrentFile();
+				if (currentFile != null) {
+					try {
+						List<String> lines = ListConversionHelper.tableViewToLines(tableView, getCSVSeparator());
+						Writer.writeFile(currentFile, lines);
+						setSavedStatus(true);
+						setStatus(currentFile.getAbsolutePath() + " gespeichert");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Allows user to pick a file via FileChooser and loads the files data into
+	 * the TableView.
+	 * 
+	 */
+	public void openFile() {
+		FileChooser fc = FileChooserFactory.createCSVChooser("CSV-Datei öffnen");
+		File csvFile = fc.showOpenDialog(null);
+
+		if (csvFile != null) {
+			try {
+				populateTableView(CSVParser.parseFile(csvFile, ","));
+				setStatus(csvFile.getAbsolutePath() + " geöffnet");
+				setTitle(csvFile.getAbsolutePath());
+				setCurrentFile(csvFile);
+				setSavedStatus(true);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
 	 * Populates the TableView of the application with given data.
 	 * 
 	 * @param pData
@@ -116,6 +242,8 @@ public class ApplicationController {
 	public void populateTableView(List<List<String>> pData) {
 		ObservableList<List<String>> rows = FXCollections.observableArrayList(pData);
 		TableView<List<String>> result = TableViewFactory.createTableView(rows, this);
+		getTableView().getItems().clear();
+		getTableView().getColumns().clear();
 		getTableView().getColumns().addAll(result.getColumns());
 		getTableView().setItems(result.getItems());
 	}

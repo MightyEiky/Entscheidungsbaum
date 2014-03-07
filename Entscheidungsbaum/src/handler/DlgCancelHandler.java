@@ -20,9 +20,8 @@ public class DlgCancelHandler implements EventHandler<MouseEvent> {
 	}
 
 	@Override
-	public void handle(MouseEvent arg0) {
-		controller.getDialog().setVisible(false);
-		controller.getMainWindow().setOpacity(1.0);
-		controller.getMainWindow().setDisable(false);
+	public void handle(MouseEvent pEvent) {
+		controller.responseCancel();
+		pEvent.consume();
 	}
 }

@@ -1,16 +1,8 @@
 package handler;
 
-import io.CSVParser;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.FileChooser;
 import controller.ApplicationController;
-import factory.FileChooserFactory;
 
 public class OpenHandler implements EventHandler<ActionEvent> {
 
@@ -33,21 +25,10 @@ public class OpenHandler implements EventHandler<ActionEvent> {
 	 */
 	@Override
 	public void handle(ActionEvent pAction) {
-		FileChooser fc = FileChooserFactory.createCSVChooser("CSV öffnen");
-		File csvFile = fc.showOpenDialog(null);
-
-		if (csvFile != null) {
-			try {
-				controller.populateTableView(CSVParser.parseFile(csvFile, ","));
-				controller.setStatus(csvFile.getAbsolutePath() + " geöffnet");
-				controller.setTitle(csvFile.getAbsolutePath());
-				controller.setCurrentFile(csvFile);
-				controller.setSavedStatus(true);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (!controller.getSavedStatus()) {
+			controller.showUnsavedChangesDialog(ApplicationController.CONTEXT_OPEN_FILE);
+		} else {
+			controller.openFile();
 		}
 	}
 }

@@ -28,6 +28,11 @@ public class QuitHandler implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent pAction) {
-		controller.quit();
+		if (!controller.getSavedStatus()) {
+			controller.showUnsavedChangesDialog(ApplicationController.CONTEXT_CLOSE_APPLICATION);
+			pAction.consume();
+		} else {
+			controller.quit();
+		}
 	}
 }
