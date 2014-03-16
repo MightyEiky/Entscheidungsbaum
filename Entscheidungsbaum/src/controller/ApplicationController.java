@@ -21,16 +21,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listener.SelectionChangeListener;
+import listener.TabChangeListener;
 import util.ListConversionHelper;
 
 /**
@@ -51,6 +55,12 @@ public class ApplicationController {
 
 	@FXML
 	private TableView<List<String>> tableView;
+	@FXML
+	private Canvas treeCanvas;
+	@FXML
+	private Pane treePane;
+	@FXML
+	private TabPane tabPane;
 	@FXML
 	private MenuItem open;
 	@FXML
@@ -92,14 +102,25 @@ public class ApplicationController {
 
 		initializeMenu();
 		initializeTableView();
+		initializeTabPane();
 		initializeMembers();
 		initializeDialog();
 	}
 
+	/**
+	 * Initializes the dialog.
+	 */
 	private void initializeDialog() {
 		dlgCancel.setOnMouseClicked(new DlgCancelHandler(this));
 		dlgClose.setOnMouseClicked(new DlgDiscardHandler(this));
 		dlgSave.setOnMouseClicked(new DlgSaveHandler(this));
+	}
+
+	/**
+	 * Initializes the tab pane.
+	 */
+	private void initializeTabPane() {
+		tabPane.getSelectionModel().selectedItemProperty().addListener(new TabChangeListener(this));
 	}
 
 	/**
@@ -406,5 +427,22 @@ public class ApplicationController {
 	 */
 	public TableView<List<String>> getTableView() {
 		return tableView;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Pane getTreePane() {
+		return treePane;
+	}
+
+	/**
+	 * Returns the Canvas associated with the tree view.
+	 * 
+	 * @return Canvas instance
+	 */
+	public Canvas getTreeCanvas() {
+		return treeCanvas;
 	}
 }
