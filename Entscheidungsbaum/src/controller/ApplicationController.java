@@ -241,7 +241,7 @@ public class ApplicationController {
 
 		if (csvFile != null) {
 			try {
-				populateTableView(CSVParser.parseFile(csvFile, ","));
+				populateTableView(CSVParser.parseFile(csvFile, getCSVSeparator()));
 				setStatus(csvFile.getAbsolutePath() + " geöffnet");
 				setTitle(csvFile.getAbsolutePath());
 				setCurrentFile(csvFile);
