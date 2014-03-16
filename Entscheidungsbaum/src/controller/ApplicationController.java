@@ -51,7 +51,7 @@ public class ApplicationController {
 	public static final int CONTEXT_OPEN_FILE = 2;
 
 	/** CSV value separator */
-	private static final String CSV_SEPARATOR = ",";
+	private static final String CSV_SEPARATOR = ";";
 
 	@FXML
 	private TableView<List<String>> tableView;
