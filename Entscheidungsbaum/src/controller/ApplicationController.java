@@ -19,7 +19,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -28,7 +27,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -51,7 +49,13 @@ public class ApplicationController {
 	public static final int CONTEXT_OPEN_FILE = 2;
 
 	/** CSV value separator */
-	private static final String CSV_SEPARATOR = ";";
+	public static final String CSV_SEPARATOR = ";";
+
+	/** Style for selected column */
+	public static final String STYLE_SELECTED = "-fx-background-color:#ffaaaa";
+
+	/** Style for not selected column */
+	public static final String STYLE_NOT_SELECTED = "-fx-background-color:#bbbbbb";
 
 	@FXML
 	private TableView<List<String>> tableView;
@@ -83,27 +87,22 @@ public class ApplicationController {
 	private Button dlgSave;
 
 	/** Current csv file displayed in the TableView */
-	private File currentFile;
+	private File currentFile = null;
 
 	/** Indicating whether or not there are unsaved changes in current csv file */
-	private boolean saved;
+	private boolean saved = true;
 
 	/** Conetext of unsaved changes dialog */
-	private int dlgContext;
+	private int dlgContext = -1;
+
+	/** Current target attribute index */
+	private int targetAttribute = -1;
 
 	@FXML
 	void initialize() {
-		dlgClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				quit();
-			}
-		});
-
 		initializeMenu();
 		initializeTableView();
 		initializeTabPane();
-		initializeMembers();
 		initializeDialog();
 	}
 
@@ -121,14 +120,6 @@ public class ApplicationController {
 	 */
 	private void initializeTabPane() {
 		tabPane.getSelectionModel().selectedItemProperty().addListener(new TabChangeListener(this));
-	}
-
-	/**
-	 * Initializes attributes of this class.
-	 */
-	private void initializeMembers() {
-		saved = true;
-		currentFile = null;
 	}
 
 	/**
@@ -218,7 +209,7 @@ public class ApplicationController {
 				File currentFile = getCurrentFile();
 				if (currentFile != null) {
 					try {
-						List<String> lines = ListConversionHelper.tableViewToLines(tableView, getCSVSeparator());
+						List<String> lines = ListConversionHelper.tableViewToLines(tableView, CSV_SEPARATOR);
 						Writer.writeFile(currentFile, lines);
 						setSavedStatus(true);
 						setStatus(currentFile.getAbsolutePath() + " gespeichert");
@@ -241,11 +232,12 @@ public class ApplicationController {
 
 		if (csvFile != null) {
 			try {
-				populateTableView(CSVParser.parseFile(csvFile, getCSVSeparator()));
+				populateTableView(CSVParser.parseFile(csvFile, CSV_SEPARATOR));
 				setStatus(csvFile.getAbsolutePath() + " geöffnet");
 				setTitle(csvFile.getAbsolutePath());
 				setCurrentFile(csvFile);
 				setSavedStatus(true);
+				getTabPane().getSelectionModel().select(0);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -266,6 +258,8 @@ public class ApplicationController {
 		getTableView().getItems().clear();
 		getTableView().getColumns().clear();
 		getTableView().getColumns().addAll(result.getColumns());
+		int lastColIndex = getTableView().getColumns().size() - 1;
+		setTargetAttribute(lastColIndex);
 		getTableView().setItems(result.getItems());
 	}
 
@@ -332,15 +326,6 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Returns the value separator used in the CSV files.
-	 * 
-	 * @return String
-	 */
-	public String getCSVSeparator() {
-		return CSV_SEPARATOR;
-	}
-
-	/**
 	 * Allows to access the currently opened File.
 	 * 
 	 * @return currently opened File instance
@@ -356,6 +341,17 @@ public class ApplicationController {
 	 */
 	public void setCurrentFile(File pFile) {
 		currentFile = pFile;
+	}
+
+	/**
+	 * Allows to set the target attribute.
+	 */
+	public void setTargetAttribute(int pIndex) {
+		if (targetAttribute != -1) {
+			tableView.getColumns().get(targetAttribute).setStyle(STYLE_NOT_SELECTED);
+		}
+		tableView.getColumns().get(pIndex).setStyle(STYLE_SELECTED);
+		targetAttribute = pIndex;
 	}
 
 	/**
@@ -444,5 +440,14 @@ public class ApplicationController {
 	 */
 	public Canvas getTreeCanvas() {
 		return treeCanvas;
+	}
+
+	/**
+	 * Returns the TabPane.
+	 * 
+	 * @return TabPane
+	 */
+	public TabPane getTabPane() {
+		return tabPane;
 	}
 }

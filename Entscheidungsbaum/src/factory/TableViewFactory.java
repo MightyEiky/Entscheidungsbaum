@@ -6,12 +6,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.util.Callback;
+import listener.RadioButtonGroupListener;
 
 import component.EditableTableCell;
 
@@ -35,7 +38,7 @@ public final class TableViewFactory {
 		List<String> colNames = pDataRows.get(0);
 		ObservableList<List<String>> observableDataRows = FXCollections.observableArrayList(pDataRows);
 		TableView<List<String>> tableView = new TableView<List<String>>();
-
+		ToggleGroup radioGroup = new ToggleGroup();
 		for (int i = 0; i < colNames.size(); i++) {
 			final int index = i;
 			TableColumn<List<String>, String> currentCol = new TableColumn<List<String>, String>(colNames.get(i));
@@ -57,10 +60,18 @@ public final class TableViewFactory {
 							.getColumn(), arg0.getNewValue());
 				}
 			});
+			RadioButton r = new RadioButton();
+			r.setUserData(i);
+			r.setToggleGroup(radioGroup);
+			if (i == colNames.size() - 1) {
+				r.setSelected(true);
+			}
+			currentCol.setGraphic(r);
 			currentCol.setMinWidth(150);
+			currentCol.setStyle(ApplicationController.STYLE_NOT_SELECTED);
 			tableView.getColumns().add(currentCol);
 		}
-
+		radioGroup.selectedToggleProperty().addListener(new RadioButtonGroupListener(pController));
 		observableDataRows.remove(0);
 		tableView.setItems(observableDataRows);
 		return tableView;
