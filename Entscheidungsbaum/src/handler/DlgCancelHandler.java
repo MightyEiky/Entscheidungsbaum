@@ -4,6 +4,11 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import controller.ApplicationController;
 
+/**
+ * 
+ * @author Julius
+ * 
+ */
 public class DlgCancelHandler implements EventHandler<MouseEvent> {
 
 	/** Application controller of application */

@@ -55,7 +55,7 @@ public class ApplicationController {
 	public static final String STYLE_SELECTED = "-fx-background-color:#ffaaaa";
 
 	/** Style for not selected column */
-	public static final String STYLE_NOT_SELECTED = "-fx-background-color:#bbbbbb";
+	public static final String STYLE_NOT_SELECTED = "-fx-background-color:#cccccc";
 
 	@FXML
 	private TableView<List<String>> tableView;
@@ -259,6 +259,7 @@ public class ApplicationController {
 		getTableView().getColumns().clear();
 		getTableView().getColumns().addAll(result.getColumns());
 		int lastColIndex = getTableView().getColumns().size() - 1;
+		targetAttribute = -1;
 		setTargetAttribute(lastColIndex);
 		getTableView().setItems(result.getItems());
 	}

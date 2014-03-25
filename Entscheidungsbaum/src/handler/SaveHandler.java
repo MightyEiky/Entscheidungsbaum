@@ -4,6 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import controller.ApplicationController;
 
+/**
+ * 
+ * @author Julius
+ * 
+ */
 public class SaveHandler implements EventHandler<ActionEvent> {
 
 	/** Application controller instance of this application */

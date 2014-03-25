@@ -39,7 +39,7 @@ public class TabChangeListener implements ChangeListener<Tab> {
 		} else if (newPaneLabel.equals("Baumansicht")) {
 			List<Tier> tree = TestTreeFactory.createTree();
 			GraphicsContext gc = controller.getTreeCanvas().getGraphicsContext2D();
-			Picasso.drawTree(gc, tree, 30, 30, false);
+			Picasso.drawTree(gc, tree, 20, 20, false);
 		}
 	}
 }

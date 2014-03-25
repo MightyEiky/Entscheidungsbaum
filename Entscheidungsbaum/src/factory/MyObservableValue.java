@@ -4,6 +4,11 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+/**
+ * 
+ * @author Julius
+ * 
+ */
 public class MyObservableValue implements ObservableValue<String> {
 
 	String s;

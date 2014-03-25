@@ -4,6 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import controller.ApplicationController;
 
+/**
+ * 
+ * @author Julius
+ * 
+ */
 public class OpenHandler implements EventHandler<ActionEvent> {
 
 	/** Application controller instance */

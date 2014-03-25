@@ -21,7 +21,7 @@ public class TestTreeFactory {
 		TierNode masterNode = new TierNode(null, "Hello World");
 		TierNode node1 = new TierNode(masterNode, "Knoten 1");
 		TierNode node2 = new TierNode(masterNode, "Knoten 2");
-		TierNode node11 = new TierNode(node1, "Knoten 1 1");
+		TierNode node11 = new TierNode(node1, "Knoten 1 1 asjkdaksdkalsjd");
 		TierNode node12 = new TierNode(node1, "Knoten 1 2");
 		TierNode node13 = new TierNode(node1, "Knoten 1 3");
 		TierNode node21 = new TierNode(node2, "Knoten 2 1");
